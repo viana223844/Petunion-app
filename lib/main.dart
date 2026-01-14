@@ -16,7 +16,6 @@ class PetunionApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         primaryColor: const Color(0xFFFF914D),
-        fontFamily: 'Roboto',
       ),
       home: const PetunionScaffold(),
     );
@@ -31,7 +30,7 @@ class PetunionScaffold extends StatefulWidget {
 }
 
 class _PetunionScaffoldState extends State<PetunionScaffold> {
-  int _viewIndex = 0; // 0: Home/Outdoor, 1: Pet Match
+  int _viewIndex = 0; 
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +38,10 @@ class _PetunionScaffoldState extends State<PetunionScaffold> {
       backgroundColor: const Color(0xFFF8F8F8),
       body: Stack(
         children: [
-          // 1. O OUTDOOR DINÂMICO (TOPO)
+          // 1. OUTDOOR (TOPO)
           _buildOutdoor(),
 
-          // 2. ÁREA DE CONTEÚDO (MARKPLACE OU MATCH)
+          // 2. CONTEÚDO DINÂMICO
           AnimatedSwitcher(
             duration: const Duration(milliseconds: 500),
             child: _viewIndex == 0 ? _buildMarketplacePlaceholder() : _buildPetMatchView(),
@@ -68,8 +67,8 @@ class _PetunionScaffoldState extends State<PetunionScaffold> {
         ),
         child: PageView(
           children: const [
-            Center(child: Text("PETUNION\nPROMOÇÕES NACIONAIS", textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.w900))),
-            Center(child: Text("MATCH GENÉTICO\nENCONTRE A ELITE", textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.w900))),
+            Center(child: Text("PETUNION\nSEM BARREIRAS", textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.w900))),
+            Center(child: Text("PESQUISE PELA AMI\nPROMOÇÕES NACIONAIS", textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.w900))),
           ],
         ),
       ),
@@ -82,12 +81,11 @@ class _PetunionScaffoldState extends State<PetunionScaffold> {
       left: 0, right: 0, bottom: 0,
       child: Container(
         decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
-        child: const Center(child: Text("Diga 'AMI, buscar ração'...", style: TextStyle(color: Colors.grey, fontSize: 16))),
+        child: const Center(child: Text("Toque na AMI para começar", style: TextStyle(color: Colors.grey))),
       ),
     );
   }
 
-  // 🧬 SISTEMA PET MATCH (TINDER)
   Widget _buildPetMatchView() {
     return Positioned(
       top: MediaQuery.of(context).size.height * 0.1,
@@ -101,28 +99,20 @@ class _PetunionScaffoldState extends State<PetunionScaffold> {
         ),
         child: Column(
           children: [
-            Expanded(child: Container(color: Colors.grey[300], child: const Icon(Icons.pets, size: 100, color: Colors.white))),
-            const Padding(
-              padding: EdgeInsets.all(20),
+            Expanded(child: Container(color: Colors.grey[200], child: const Icon(Icons.pets, size: 80, color: Colors.orange))),
+            Padding(
+              padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Thor - Bulldog Francês", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-                  Divider(),
-                  Text("🧬 FICHA TÉCNICA GENÉTICA", style: TextStyle(color: Color(0xFFFF914D), fontWeight: FontWeight.bold)),
-                  SizedBox(height: 10),
-                  Text("• Idade: 2 anos\n• Vacinas: Em dia\n• Pedigree: Sim\n• Local: Brasília e Entorno"),
+                  const Text("Thor - Bulldog Francês", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                  const Divider(),
+                  const Text("GENÉTICA E SAÚDE", style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 10),
+                  const Text("• Vacinas: OK\n• Linhagem: Pedigree Ouro\n• Idade: 2 anos"),
                 ],
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                IconButton(icon: const Icon(Icons.close, color: Colors.red, size: 40), onPressed: () {}),
-                IconButton(icon: const Icon(Icons.favorite, color: Colors.green, size: 40), onPressed: () {}),
-              ],
-            ),
-            const SizedBox(height: 20),
           ],
         ),
       ),
@@ -138,13 +128,12 @@ class _PetunionScaffoldState extends State<PetunionScaffold> {
           alignment: Alignment.center,
           children: [
             _orbitalBtn(angle: -150, icon: Icons.store, label: "Market", onTap: () => setState(() => _viewIndex = 0)),
-            _orbitalBtn(angle: -110, icon: Icons.pets, label: "Match", onTap: () => setState(() => _viewIndex = 1)),
+            _orbitalBtn(angle: -110, icon: Icons.favorite, label: "Match", onTap: () => setState(() => _viewIndex = 1)),
             _orbitalBtn(angle: -70, icon: Icons.message, label: "Chat", onTap: () {}),
             _orbitalBtn(angle: -30, icon: Icons.person, label: "Perfil", onTap: () {}),
             
-            // AMI CENTRAL
             GestureDetector(
-              onTap: () => print("AMI Ativada: Escutando pesquisa..."),
+              onTap: () => print("AMI Ativada"),
               child: Container(
                 width: 90, height: 90,
                 decoration: const BoxDecoration(color: Color(0xFFFF914D), shape: BoxShape.circle, boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 15)]),
@@ -168,7 +157,11 @@ class _PetunionScaffoldState extends State<PetunionScaffold> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(padding: const EdgeInsets.all(12), decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle, boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 5)]), child: Icon(icon, color: const Color(0xFFFF914D), size: 24)),
+            Container(
+              padding: const EdgeInsets.all(12), 
+              decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle, boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 5)]), 
+              child: Icon(icon, color: const Color(0xFFFF914D), size: 24)
+            ),
             Text(label, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
           ],
         ),
