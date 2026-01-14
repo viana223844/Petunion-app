@@ -29,7 +29,7 @@ class PetunionHome extends StatelessWidget {
             ),
           ),
 
-          // GRID DE COMANDOS COM TOQUE NA AMI
+          // GRID DE COMANDOS
           Padding(
             padding: const EdgeInsets.only(top: 285),
             child: GridView.count(
@@ -42,9 +42,7 @@ class PetunionHome extends StatelessWidget {
                 _buildIcon(Icons.pets, "Meus Pets"),
                 _buildIcon(Icons.dashboard_customize_outlined, "Mural"),
                 _buildIcon(Icons.map_outlined, "Parques"),
-                
-                _buildAmiIcon(context), // AGORA PASSAMOS O CONTEXTO PARA O TOQUE
-                
+                _buildAmiIcon(context), 
                 _buildIcon(Icons.emoji_events_outlined, "Ranking"),
                 _buildIcon(Icons.local_mall_outlined, "Loja"),
                 _buildIcon(Icons.gavel_rounded, "Jurídico"),
@@ -54,50 +52,13 @@ class PetunionHome extends StatelessWidget {
           ),
         ],
       ),
-      
-      bottomNavigationBar: Container(
-        margin: EdgeInsets.fromLTRB(25, 0, 25, 30),
-        height: 75,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(35),
-          boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 20, offset: Offset(0, 10))],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _buildNavItem(Icons.home_filled, "União", true),
-            _buildNavItem(Icons.explore_outlined, "Mapa", false),
-            _buildNavItem(Icons.chat_bubble_outline, "Social", false),
-            _buildNavItem(Icons.person_outline, "Perfil", false),
-          ],
-        ),
-      ),
+      bottomNavigationBar: _buildBottomNav(),
     );
   }
 
-  Widget _buildIcon(IconData icon, String label) {
-    return Column(
-      children: [
-        Container(
-          padding: EdgeInsets.all(15),
-          decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle, boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10)]),
-          child: Icon(icon, color: Color(0xFF1565C0), size: 28),
-        ),
-        SizedBox(height: 6),
-        Text(label, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Colors.blueGrey)),
-      ],
-    );
-  }
-
-  // FUNÇÃO DA AMI COM DETECÇÃO DE TOQUE
   Widget _buildAmiIcon(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Ami: 'Olá! Estou preparando sua consultoria técnica...'")),
-        );
-      },
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AmiChatScreen())),
       child: Column(
         children: [
           Container(
@@ -109,7 +70,6 @@ class PetunionHome extends StatelessWidget {
             ),
             child: CircleAvatar(
               radius: 30,
-              backgroundColor: Colors.white,
               backgroundImage: NetworkImage('https://raw.githubusercontent.com/viana223844/Petunion-app/main/ami_face.png'), 
             ),
           ),
@@ -120,13 +80,104 @@ class PetunionHome extends StatelessWidget {
     );
   }
 
-  Widget _buildNavItem(IconData icon, String label, bool active) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+  // REUTILIZAÇÃO DE WIDGETS
+  Widget _buildIcon(IconData icon, String label) {
+    return Column(children: [
+      Container(
+        padding: EdgeInsets.all(15),
+        decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle, boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10)]),
+        child: Icon(icon, color: Color(0xFF1565C0), size: 28),
+      ),
+      SizedBox(height: 6),
+      Text(label, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Colors.blueGrey)),
+    ]);
+  }
+
+  Widget _buildBottomNav() {
+    return Container(
+      margin: EdgeInsets.fromLTRB(25, 0, 25, 30),
+      height: 75,
+      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(35), boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 20)]),
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        Icon(Icons.home_filled, color: Color(0xFF0D47A1), size: 28),
+        Icon(Icons.explore_outlined, color: Colors.grey.shade400, size: 28),
+        Icon(Icons.chat_bubble_outline, color: Colors.grey.shade400, size: 28),
+        Icon(Icons.person_outline, color: Colors.grey.shade400, size: 28),
+      ]),
+    );
+  }
+}
+
+// NOVA TELA: CHAT DA AMI (ESTILO WHATSAPP COM MARCA D'ÁGUA)
+class AmiChatScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xFF0D47A1),
+        title: Row(children: [
+          CircleAvatar(radius: 18, backgroundImage: NetworkImage('https://raw.githubusercontent.com/viana223844/Petunion-app/main/ami_face.png')),
+          SizedBox(width: 10),
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text("Ami Especialista", style: TextStyle(fontSize: 16)),
+            Text("Online agora", style: TextStyle(fontSize: 11, color: Colors.lightBlueAccent)),
+          ])
+        ]),
+      ),
+      body: Stack(
+        children: [
+          // MARCA D'ÁGUA DO CONSULTÓRIO
+          Opacity(
+            opacity: 0.05, // Suave para não atrapalhar a leitura
+            child: Center(child: Icon(Icons.local_hospital, size: 300, color: Colors.blueGrey)),
+          ),
+          Column(
+            children: [
+              Expanded(
+                child: ListView(
+                  padding: EdgeInsets.all(15),
+                  children: [
+                    _buildMessageBubble("Olá! Sou a Ami. Como posso ajudar com a saúde ou questões jurídicas do seu pet em Brasília hoje?", true),
+                  ],
+                ),
+              ),
+              _buildInputArea(),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMessageBubble(String text, bool isAmi) {
+    return Row(
+      mainAxisAlignment: isAmi ? MainAxisAlignment.start : MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Icon(icon, color: active ? Color(0xFF0D47A1) : Colors.grey.shade400, size: 28),
-        if (active) Container(margin: EdgeInsets.only(top: 4), height: 4, width: 4, decoration: BoxDecoration(color: Color(0xFF0D47A1), shape: BoxShape.circle))
+        if (isAmi) CircleAvatar(radius: 15, backgroundImage: NetworkImage('https://raw.githubusercontent.com/viana223844/Petunion-app/main/ami_face.png')),
+        Container(
+          margin: EdgeInsets.all(8),
+          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          constraints: BoxConstraints(maxWidth: 250),
+          decoration: BoxDecoration(
+            color: isAmi ? Colors.white : Color(0xFFDCF8C6),
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 5)],
+          ),
+          child: Text(text, style: TextStyle(color: Colors.black87, fontSize: 14)),
+        ),
       ],
+    );
+  }
+
+  Widget _buildInputArea() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      color: Colors.white,
+      child: Row(children: [
+        Expanded(child: TextField(decoration: InputDecoration(hintText: "Digite sua dúvida...", border: InputBorder.none))),
+        IconButton(icon: Icon(Icons.send, color: Color(0xFF0D47A1)), onPressed: () {}),
+      ]),
     );
   }
 }
