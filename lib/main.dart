@@ -10,11 +10,11 @@ class PetunionApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Petunion Brasília',
+      title: 'Petunion Brasilia',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.orange,
-        scaffoldBackgroundColor: const Color(0xFFF8F9FA),
+        scaffoldBackgroundColor: const Color(0xFFF8F8FA),
         useMaterial3: true,
       ),
       home: const HomeScreen(),
@@ -24,7 +24,6 @@ class PetunionApp extends StatelessWidget {
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
-
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -33,10 +32,9 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
   final List<Map<String, String>> _pets = [
-    {'name': 'Rex', 'breed': 'Golden Retriever', 'location': 'Asa Sul, DF', 'image': 'https://images.unsplash.com/photo-1552053831-71594a27632d?w=500'},
-    {'name': 'Luna', 'breed': 'Persian Cat', 'location': 'Sudoeste, DF', 'image': 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500'},
-    {'name': 'Thor', 'breed': 'Beagle', 'location': 'Águas Claras, DF', 'image': 'https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?w=500'},
-    {'name': 'Mel', 'breed': 'Poodle', 'location': 'Lago Norte, DF', 'image': 'https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=500'},
+    {'name': 'Rex', 'breed': 'Golden Retriever', 'location': 'Asa Sul, DF'},
+    {'name': 'Luna', 'breed': 'Persian Cat', 'location': 'Sudoeste, DF'},
+    {'name': 'Thor', 'breed': 'Beagle', 'location': 'Aguas Claras, DF'},
   ];
 
   @override
@@ -50,19 +48,20 @@ class _HomeScreenState extends State<HomeScreen> {
             pinned: true,
             backgroundColor: const Color(0xFFFF914D),
             flexibleSpace: const FlexibleSpaceBar(
-              title: Text('Petunion Brasília', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+              title: Text('Petunion Brasilia', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
               centerTitle: true,
             ),
           ),
           SliverToBoxAdapter(
-            child: TextField(
-  decoration: InputDecoration(
-    hintText: 'Search pets near you...',
-    prefixIcon: const Icon(Icons.search, color: Colors.grey),
-    border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-  ),
-),
-            
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: 'Search pets near you...',
+                  prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                ),
+              ),
             ),
           ),
           SliverPadding(
@@ -82,14 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
-                              image: DecorationImage(image: NetworkImage(pet['image']!), fit: BoxFit.cover),
-                            ),
-                          ),
-                        ),
+                        Expanded(child: Container(color: Colors.grey[300])),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
@@ -123,4 +115,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
