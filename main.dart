@@ -29,7 +29,7 @@ class PetunionHome extends StatelessWidget {
             ),
           ),
 
-          // GRID DE COMANDOS COM A AMI REAL
+          // GRID DE COMANDOS COM TOQUE NA AMI
           Padding(
             padding: const EdgeInsets.only(top: 285),
             child: GridView.count(
@@ -43,7 +43,7 @@ class PetunionHome extends StatelessWidget {
                 _buildIcon(Icons.dashboard_customize_outlined, "Mural"),
                 _buildIcon(Icons.map_outlined, "Parques"),
                 
-                _buildAmiIcon(), // CHAMADA PARA O ROSTO DA AMI
+                _buildAmiIcon(context), // AGORA PASSAMOS O CONTEXTO PARA O TOQUE
                 
                 _buildIcon(Icons.emoji_events_outlined, "Ranking"),
                 _buildIcon(Icons.local_mall_outlined, "Loja"),
@@ -90,26 +90,33 @@ class PetunionHome extends StatelessWidget {
     );
   }
 
-  Widget _buildAmiIcon() {
-    return Column(
-      children: [
-        Container(
-          padding: EdgeInsets.all(2),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            gradient: LinearGradient(colors: [Colors.blueAccent, Colors.cyanAccent]),
-            boxShadow: [BoxShadow(color: Colors.blueAccent.withOpacity(0.4), blurRadius: 12)],
+  // FUNÇÃO DA AMI COM DETECÇÃO DE TOQUE
+  Widget _buildAmiIcon(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Ami: 'Olá! Estou preparando sua consultoria técnica...'")),
+        );
+      },
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.all(2),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: LinearGradient(colors: [Colors.blueAccent, Colors.cyanAccent]),
+              boxShadow: [BoxShadow(color: Colors.blueAccent.withOpacity(0.4), blurRadius: 12)],
+            ),
+            child: CircleAvatar(
+              radius: 30,
+              backgroundColor: Colors.white,
+              backgroundImage: NetworkImage('https://raw.githubusercontent.com/viana223844/Petunion-app/main/ami_face.png'), 
+            ),
           ),
-          child: CircleAvatar(
-            radius: 30,
-            backgroundColor: Colors.white,
-            // Link da imagem que processamos baseada na sua referência
-            backgroundImage: NetworkImage('https://raw.githubusercontent.com/viana223844/Petunion-app/main/ami_face.png'), 
-          ),
-        ),
-        SizedBox(height: 4),
-        Text("AMI", style: TextStyle(fontSize: 12, fontWeight: FontWeight.black, color: Colors.blueAccent)),
-      ],
+          SizedBox(height: 4),
+          Text("AMI", style: TextStyle(fontSize: 12, fontWeight: FontWeight.black, color: Colors.blueAccent)),
+        ],
+      ),
     );
   }
 
