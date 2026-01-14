@@ -55,12 +55,14 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: TextField(
-                hintText: 'Search pets near you...',
-                leading: const Icon(Icons.search, color: Colors.grey),
-              ),
+            child: TextField(
+  decoration: InputDecoration(
+    hintText: 'Search pets near you...',
+    prefixIcon: const Icon(Icons.search, color: Colors.grey),
+    border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+  ),
+),
+            
             ),
           ),
           SliverPadding(
