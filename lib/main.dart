@@ -1,32 +1,29 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-void main() => runApp(const PetunionApp());
+void main() {
+  runApp(PetunionApp());
+}
 
 class PetunionApp extends StatelessWidget {
-  const PetunionApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(useMaterial3: true),
-      home: const PetunionHome(),
+      home: PetunionHome(),
     );
   }
 }
 
 class PetunionHome extends StatefulWidget {
-  const PetunionHome({super.key});
-
   @override
-  State<PetunionHome> createState() => _PetunionHomeState();
+  _PetunionHomeState createState() => _PetunionHomeState();
 }
 
 class _PetunionHomeState extends State<PetunionHome> {
-  // 6 BOTÕES SATÉLITES FLUTUANTES AO REDOR DA AMI
-  Widget _orbitalBtn({required double angle, required IconData icon, required String label}) {
-    double radius = 115.0; 
+  // MÉTODO DOS BOTÕES ORBITAIS DEFINIDO CORRETAMENTE DENTRO DO STATE
+  Widget _orbitalBtn(double angle, IconData icon, String label) {
+    double radius = 110.0;
     double x = radius * math.cos(angle * math.pi / 180);
     double y = radius * math.sin(angle * math.pi / 180);
 
@@ -36,16 +33,19 @@ class _PetunionHomeState extends State<PetunionHome> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            padding: const EdgeInsets.all(12),
+            padding: EdgeInsets.all(12),
             decoration: BoxDecoration(
               color: Colors.white,
               shape: BoxShape.circle,
-              boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.08), blurRadius: 10, offset: const Offset(0, 4))],
+              boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 5)],
             ),
-            child: Icon(icon, color: const Color(0xFFFF914D), size: 24),
+            child: Icon(icon, color: Color(0xFFFF914D), size: 24),
           ),
-          const SizedBox(height: 4),
-          Text(label, style: const TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.black87)),
+          SizedBox(height: 4),
+          Text(
+            label,
+            style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.black87),
+          ),
         ],
       ),
     );
@@ -54,69 +54,83 @@ class _PetunionHomeState extends State<PetunionHome> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    
+
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F7FA),
+      backgroundColor: Color(0xFFF5F7FA),
       body: Stack(
         alignment: Alignment.center,
         children: [
-          // 1. OUTDOOR (HEADER CURVO DO TEMPLATE)
+          // 1. OUTDOOR CURVO (HEADER) -
           Positioned(
-            top: 0, left: 0, right: 0,
-            height: size.height * 0.42,
+            top: 0,
+            left: 0,
+            right: 0,
+            height: size.height * 0.45,
             child: Container(
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [Color(0xFFFF914D), Color(0xFFF37021)],
-                  begin: Alignment.topLeft, end: Alignment.bottomRight,
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                 ),
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(60),
                   bottomRight: Radius.circular(60),
                 ),
               ),
-              child: const SafeArea(
-                child: Padding(
-                  padding: EdgeInsets.only(top: 30),
-                  child: Text("PETUNION", 
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.w900, letterSpacing: 4)
+              child: SafeArea(
+                child: Center(
+                  child: Text(
+                    "PETUNION",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 32,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 4,
+                    ),
                   ),
                 ),
               ),
             ),
           ),
 
-          // 2. CARD CENTRAL (CONTEÚDO DO MATCH)
+          // 2. CARD CENTRAL (CONTEÚDO) -
           Positioned(
-            top: size.height * 0.22,
-            left: 25, right: 25,
-            height: size.height * 0.38,
+            top: size.height * 0.25,
+            left: 25,
+            right: 25,
+            height: size.height * 0.35,
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(35),
-                boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 25, offset: const Offset(0, 10))],
+                boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 20)],
               ),
               child: Column(
                 children: [
                   Expanded(
                     child: Container(
                       width: double.infinity,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFFF8F9FB), 
-                        borderRadius: BorderRadius.vertical(top: Radius.circular(35))
+                      decoration: BoxDecoration(
+                        color: Color(0xFFF8F9FB),
+                        borderRadius: BorderRadius.vertical(top: Radius.circular(35)),
                       ),
-                      child: const Icon(Icons.pets, size: 80, color: Color(0xFFFF914D)),
+                      child: Icon(Icons.pets, size: 80, color: Color(0xFFFF914D)),
                     ),
                   ),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.all(20),
                     child: Column(
                       children: [
-                        Text("Thor - Bulldog Francês", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                        Text(
+                          "Thor - Bulldog Francês",
+                          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                        ),
                         SizedBox(height: 5),
-                        Text("Genética de Elite • Vacinas OK", style: TextStyle(color: Colors.grey, fontSize: 13)),
+                        Text(
+                          "Genética de Elite • Brasília/DF",
+                          style: TextStyle(color: Colors.grey, fontSize: 13),
+                        ),
                       ],
                     ),
                   ),
@@ -127,37 +141,43 @@ class _PetunionHomeState extends State<PetunionHome> {
 
           // 3. MENU ORBITAL FLUTUANTE (AMI NO CENTRO)
           Positioned(
-            bottom: size.height * 0.02,
-            child: SizedBox(
+            bottom: size.height * 0.05,
+            child: Container(
               width: size.width,
-              height: 280,
+              height: 250,
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  _orbitalBtn(angle: 180, icon: Icons.store, label: "Market"),
-                  _orbitalBtn(angle: 220, icon: Icons.favorite, label: "Match"),
-                  _orbitalBtn(angle: 260, icon: Icons.chat_bubble, label: "Chat"),
-                  _orbitalBtn(angle: 300, icon: Icons.assignment, label: "Anúncios"),
-                  _orbitalBtn(angle: 340, icon: Icons.settings, label: "Ajustes"),
-                  _orbitalBtn(angle: 20, icon: Icons.person, label: "Perfil"),
+                  // 6 BOTÕES SATÉLITES REPOSICIONADOS
+                  _orbitalBtn(180, Icons.store, "Market"),
+                  _orbitalBtn(220, Icons.favorite, "Match"),
+                  _orbitalBtn(260, Icons.chat, "Chat"),
+                  _orbitalBtn(300, Icons.assignment, "Ads"),
+                  _orbitalBtn(340, Icons.settings, "Ajustes"),
+                  _orbitalBtn(20, Icons.person, "Perfil"),
 
-                  // AMI CENTRAL (CÍRCULO MAIOR)
+                  // AMI CENTRALIZADA (CÍRCULO MAIOR)
                   GestureDetector(
-                    onTap: () => print("AMI: Como posso ajudar?"),
+                    onTap: () => print("AMI Ativada"),
                     child: Container(
-                      width: 100, height: 100,
+                      width: 95,
+                      height: 95,
                       decoration: BoxDecoration(
-                        color: const Color(0xFFFF914D),
+                        color: Color(0xFFFF914D),
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: const Color(0xFFFF914D).withOpacity(0.4),
-                            blurRadius: 25, spreadRadius: 2, offset: const Offset(0, 8)
+                            color: Color(0xFFFF914D).withOpacity(0.4),
+                            blurRadius: 20,
+                            offset: Offset(0, 8),
                           )
                         ],
                       ),
-                      child: const Center(
-                        child: Text("AMI", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 26))
+                      child: Center(
+                        child: Text(
+                          "AMI",
+                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 24),
+                        ),
                       ),
                     ),
                   ),
