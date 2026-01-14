@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: SearchBar(
+              child: TextField(
                 hintText: 'Search pets near you...',
                 leading: const Icon(Icons.search, color: Colors.grey),
               ),
