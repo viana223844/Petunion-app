@@ -6,16 +6,14 @@ class PetunionHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF0F4F8), // Fundo clean para destacar o menu flutuante
+      backgroundColor: Color(0xFFF0F4F8),
       body: Stack(
         children: [
-          // 1. OUTDOOR DINÂMICO (TOPO)
+          // OUTDOOR DINÂMICO
           Container(
             height: 320,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Color(0xFF0D47A1), Color(0xFF1E88E5)], 
-              ),
+              gradient: LinearGradient(colors: [Color(0xFF0D47A1), Color(0xFF1E88E5)]),
               borderRadius: BorderRadius.vertical(bottom: Radius.circular(45)),
             ),
             child: Center(
@@ -25,13 +23,13 @@ class PetunionHome extends StatelessWidget {
                   Text("PETUNION BRASÍLIA", style: TextStyle(color: Colors.white60, letterSpacing: 3, fontSize: 11)),
                   SizedBox(height: 12),
                   Text("Thor em Destaque", style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold)),
-                  Text("Estrela da Asa Sul", style: TextStyle(color: Colors.white70, fontSize: 14)),
+                  Text("Estrela da Asa Sul", style: TextStyle(color: Colors.white70)),
                 ],
               ),
             ),
           ),
 
-          // 2. GRID DE COMANDOS (CENTRALIZADO)
+          // GRID DE COMANDOS COM A AMI REAL
           Padding(
             padding: const EdgeInsets.only(top: 285),
             child: GridView.count(
@@ -45,12 +43,11 @@ class PetunionHome extends StatelessWidget {
                 _buildIcon(Icons.dashboard_customize_outlined, "Mural"),
                 _buildIcon(Icons.map_outlined, "Parques"),
                 
-                // ÍCONE CENTRAL: AMI (A IA DO APP)
-                _buildAmiIcon(), 
+                _buildAmiIcon(), // CHAMADA PARA O ROSTO DA AMI
                 
                 _buildIcon(Icons.emoji_events_outlined, "Ranking"),
                 _buildIcon(Icons.local_mall_outlined, "Loja"),
-                _buildIcon(Icons.gavel_rounded, "Jurídico"), // Refletindo sua imagem de referência
+                _buildIcon(Icons.gavel_rounded, "Jurídico"),
                 _buildIcon(Icons.notifications_active_outlined, "Alertas"),
               ],
             ),
@@ -58,7 +55,6 @@ class PetunionHome extends StatelessWidget {
         ],
       ),
       
-      // 3. MENU INFERIOR FLUTUANTE
       bottomNavigationBar: Container(
         margin: EdgeInsets.fromLTRB(25, 0, 25, 30),
         height: 75,
@@ -98,7 +94,7 @@ class PetunionHome extends StatelessWidget {
     return Column(
       children: [
         Container(
-          padding: EdgeInsets.all(3),
+          padding: EdgeInsets.all(2),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             gradient: LinearGradient(colors: [Colors.blueAccent, Colors.cyanAccent]),
@@ -107,7 +103,8 @@ class PetunionHome extends StatelessWidget {
           child: CircleAvatar(
             radius: 30,
             backgroundColor: Colors.white,
-            child: Icon(Icons.psychology, color: Colors.blueAccent, size: 35), // Ícone de IA até inserirmos o rosto da imagem
+            // Link da imagem que processamos baseada na sua referência
+            backgroundImage: NetworkImage('https://raw.githubusercontent.com/viana223844/Petunion-app/main/ami_face.png'), 
           ),
         ),
         SizedBox(height: 4),
@@ -126,4 +123,3 @@ class PetunionHome extends StatelessWidget {
     );
   }
 }
-
