@@ -9,7 +9,7 @@ class PetunionHome extends StatelessWidget {
       backgroundColor: Color(0xFFF0F4F8),
       body: Stack(
         children: [
-          // OUTDOOR DINÂMICO
+          // 1. OUTDOOR DINÂMICO (TOPO)
           Container(
             height: 320,
             decoration: BoxDecoration(
@@ -29,7 +29,7 @@ class PetunionHome extends StatelessWidget {
             ),
           ),
 
-          // GRID DE COMANDOS
+          // 2. GRID DE COMANDOS COM ACESSO À AMI
           Padding(
             padding: const EdgeInsets.only(top: 285),
             child: GridView.count(
@@ -42,7 +42,9 @@ class PetunionHome extends StatelessWidget {
                 _buildIcon(Icons.pets, "Meus Pets"),
                 _buildIcon(Icons.dashboard_customize_outlined, "Mural"),
                 _buildIcon(Icons.map_outlined, "Parques"),
-                _buildAmiIcon(context), 
+                
+                _buildAmiIcon(context), // ACESSO À TELA DE CHAT
+                
                 _buildIcon(Icons.emoji_events_outlined, "Ranking"),
                 _buildIcon(Icons.local_mall_outlined, "Loja"),
                 _buildIcon(Icons.gavel_rounded, "Jurídico"),
@@ -80,7 +82,6 @@ class PetunionHome extends StatelessWidget {
     );
   }
 
-  // REUTILIZAÇÃO DE WIDGETS
   Widget _buildIcon(IconData icon, String label) {
     return Column(children: [
       Container(
@@ -108,7 +109,7 @@ class PetunionHome extends StatelessWidget {
   }
 }
 
-// NOVA TELA: CHAT DA AMI (ESTILO WHATSAPP COM MARCA D'ÁGUA)
+// 📱 TELA DE CHAT DA AMI (ESTILO WHATSAPP)
 class AmiChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -120,16 +121,23 @@ class AmiChatScreen extends StatelessWidget {
           SizedBox(width: 10),
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text("Ami Especialista", style: TextStyle(fontSize: 16)),
-            Text("Online agora", style: TextStyle(fontSize: 11, color: Colors.lightBlueAccent)),
+            Text("Online", style: TextStyle(fontSize: 11, color: Colors.lightBlueAccent)),
           ])
         ]),
       ),
       body: Stack(
         children: [
-          // MARCA D'ÁGUA DO CONSULTÓRIO
+          // MARCA D'ÁGUA: AMBIENTE DE CONSULTÓRIO
           Opacity(
-            opacity: 0.05, // Suave para não atrapalhar a leitura
-            child: Center(child: Icon(Icons.local_hospital, size: 300, color: Colors.blueGrey)),
+            opacity: 0.08,
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage('https://raw.githubusercontent.com/viana223844/Petunion-app/main/clinic_background.png'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
           ),
           Column(
             children: [
