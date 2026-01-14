@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 void main() => runApp(MaterialApp(debugShowCheckedModeBanner: false, home: PetunionHome()));
 
+// TELA PRINCIPAL (DASHBOARD)
 class PetunionHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -9,7 +10,6 @@ class PetunionHome extends StatelessWidget {
       backgroundColor: Color(0xFFF0F4F8),
       body: Stack(
         children: [
-          // 1. OUTDOOR DINÂMICO (TOPO)
           Container(
             height: 320,
             decoration: BoxDecoration(
@@ -28,8 +28,6 @@ class PetunionHome extends StatelessWidget {
               ),
             ),
           ),
-
-          // 2. GRID DE COMANDOS COM ACESSO À AMI
           Padding(
             padding: const EdgeInsets.only(top: 285),
             child: GridView.count(
@@ -42,9 +40,7 @@ class PetunionHome extends StatelessWidget {
                 _buildIcon(Icons.pets, "Meus Pets"),
                 _buildIcon(Icons.dashboard_customize_outlined, "Mural"),
                 _buildIcon(Icons.map_outlined, "Parques"),
-                
-                _buildAmiIcon(context), // ACESSO À TELA DE CHAT
-                
+                _buildAmiIcon(context), 
                 _buildIcon(Icons.emoji_events_outlined, "Ranking"),
                 _buildIcon(Icons.local_mall_outlined, "Loja"),
                 _buildIcon(Icons.gavel_rounded, "Jurídico"),
@@ -109,7 +105,7 @@ class PetunionHome extends StatelessWidget {
   }
 }
 
-// 📱 TELA DE CHAT DA AMI (ESTILO WHATSAPP)
+// 📱 TELA DE CHAT COM MENSAGEM AUTOMÁTICA DA AMI
 class AmiChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -120,14 +116,13 @@ class AmiChatScreen extends StatelessWidget {
           CircleAvatar(radius: 18, backgroundImage: NetworkImage('https://raw.githubusercontent.com/viana223844/Petunion-app/main/ami_face.png')),
           SizedBox(width: 10),
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text("Ami Especialista", style: TextStyle(fontSize: 16)),
-            Text("Online", style: TextStyle(fontSize: 11, color: Colors.lightBlueAccent)),
+            Text("Ami Especialista", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            Text("Online • Consultoria Técnica", style: TextStyle(fontSize: 10, color: Colors.lightBlueAccent)),
           ])
         ]),
       ),
       body: Stack(
         children: [
-          // MARCA D'ÁGUA: AMBIENTE DE CONSULTÓRIO
           Opacity(
             opacity: 0.08,
             child: Container(
@@ -145,7 +140,8 @@ class AmiChatScreen extends StatelessWidget {
                 child: ListView(
                   padding: EdgeInsets.all(15),
                   children: [
-                    _buildMessageBubble("Olá! Sou a Ami. Como posso ajudar com a saúde ou questões jurídicas do seu pet em Brasília hoje?", true),
+                    _buildMessageBubble("Olá! Sou a Ami, sua consultora Petunion em Brasília. 🏛️🐾", true),
+                    _buildMessageBubble("Para iniciarmos o protocolo de atendimento técnico, por favor, me informe o **nome** e a **raça** do seu pet.", true),
                   ],
                 ),
               ),
@@ -158,33 +154,48 @@ class AmiChatScreen extends StatelessWidget {
   }
 
   Widget _buildMessageBubble(String text, bool isAmi) {
-    return Row(
-      mainAxisAlignment: isAmi ? MainAxisAlignment.start : MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        if (isAmi) CircleAvatar(radius: 15, backgroundImage: NetworkImage('https://raw.githubusercontent.com/viana223844/Petunion-app/main/ami_face.png')),
-        Container(
-          margin: EdgeInsets.all(8),
-          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          constraints: BoxConstraints(maxWidth: 250),
-          decoration: BoxDecoration(
-            color: isAmi ? Colors.white : Color(0xFFDCF8C6),
-            borderRadius: BorderRadius.circular(15),
-            boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 5)],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: Row(
+        mainAxisAlignment: isAmi ? MainAxisAlignment.start : MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          if (isAmi) CircleAvatar(radius: 14, backgroundImage: NetworkImage('https://raw.githubusercontent.com/viana223844/Petunion-app/main/ami_face.png')),
+          Container(
+            margin: EdgeInsets.only(left: 8, right: 8),
+            padding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.7),
+            decoration: BoxDecoration(
+              color: isAmi ? Colors.white : Color(0xFFDCF8C6),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+                bottomRight: isAmi ? Radius.circular(15) : Radius.circular(0),
+                bottomLeft: isAmi ? Radius.circular(0) : Radius.circular(15),
+              ),
+              boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 3)],
+            ),
+            child: Text(text, style: TextStyle(color: Colors.black87, fontSize: 14, height: 1.3)),
           ),
-          child: Text(text, style: TextStyle(color: Colors.black87, fontSize: 14)),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
   Widget _buildInputArea() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      padding: EdgeInsets.fromLTRB(10, 5, 10, 20),
       color: Colors.white,
       child: Row(children: [
-        Expanded(child: TextField(decoration: InputDecoration(hintText: "Digite sua dúvida...", border: InputBorder.none))),
-        IconButton(icon: Icon(Icons.send, color: Color(0xFF0D47A1)), onPressed: () {}),
+        Expanded(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            decoration: BoxDecoration(color: Color(0xFFF0F4F8), borderRadius: BorderRadius.circular(25)),
+            child: TextField(decoration: InputDecoration(hintText: "Responder à Ami...", border: InputBorder.none, hintStyle: TextStyle(fontSize: 14))),
+          ),
+        ),
+        SizedBox(width: 8),
+        CircleAvatar(backgroundColor: Color(0xFF0D47A1), child: Icon(Icons.send, color: Colors.white, size: 20)),
       ]),
     );
   }
