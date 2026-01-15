@@ -15,8 +15,8 @@ class PetunionApp extends StatelessWidget {
 }
 
 class PetunionHome extends StatelessWidget {
-  // Widget de botão ultra-compacto para simetria total
-  Widget _buildCircleBtn(IconData icon, String label) {
+  // Widget de ícone com estética premium do template
+  Widget _buildIconTile(IconData icon, String label) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -27,15 +27,23 @@ class PetunionHome extends StatelessWidget {
             color: Colors.white,
             shape: BoxShape.circle,
             boxShadow: [
-              BoxShadow(color: Colors.black.withOpacity(0.06), blurRadius: 8, offset: Offset(0, 3))
+              BoxShadow(
+                color: Colors.black.withOpacity(0.06),
+                blurRadius: 10,
+                offset: Offset(0, 4),
+              )
             ],
           ),
-          child: Icon(icon, color: Color(0xFFFF914D), size: 22),
+          child: Icon(icon, color: Color(0xFFFF914D), size: 24),
         ),
-        SizedBox(height: 4),
+        SizedBox(height: 5),
         Text(
           label,
-          style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.black45),
+          style: TextStyle(
+            fontSize: 10,
+            fontWeight: FontWeight.w600,
+            color: Colors.black54,
+          ),
         ),
       ],
     );
@@ -49,10 +57,10 @@ class PetunionHome extends StatelessWidget {
       backgroundColor: Color(0xFFF8FAFC),
       body: Column(
         children: [
-          // 1. OUTDOOR MAXIMIZADO (NOME NO TOPO)
+          // 1. OUTDOOR MAXIMIZADO & NOME NO TOPO (PRECISÃO)
           Container(
             width: double.infinity,
-            height: screenHeight * 0.43,
+            height: screenHeight * 0.40, 
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [Color(0xFFFF914D), Color(0xFFF37021)],
@@ -68,14 +76,14 @@ class PetunionHome extends StatelessWidget {
               child: Align(
                 alignment: Alignment.topCenter,
                 child: Padding(
-                  padding: EdgeInsets.only(top: 10),
+                  padding: EdgeInsets.only(top: 15),
                   child: Text(
                     "PETUNION",
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 32,
+                      fontSize: 35,
                       fontWeight: FontWeight.w900,
-                      letterSpacing: 8,
+                      letterSpacing: 10,
                     ),
                   ),
                 ),
@@ -83,84 +91,92 @@ class PetunionHome extends StatelessWidget {
             ),
           ),
 
-          // 2. CARD DO THOR (POSIÇÃO CORRIGIDA)
+          // 2. CARD DO THOR (ALINHADO AO CONTEXTO)
           Transform.translate(
             offset: Offset(0, -screenHeight * 0.08),
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 45),
-              padding: EdgeInsets.all(15),
+              margin: EdgeInsets.symmetric(horizontal: 40),
+              padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(25),
+                borderRadius: BorderRadius.circular(30),
                 boxShadow: [
-                  BoxShadow(color: Colors.black.withOpacity(0.08), blurRadius: 15, offset: Offset(0, 5))
+                  BoxShadow(color: Colors.black12, blurRadius: 20, offset: Offset(0, 10))
                 ],
               ),
               child: Column(
                 children: [
-                  Icon(Icons.pets, size: 45, color: Color(0xFFFF914D).withOpacity(0.2)),
-                  SizedBox(height: 8),
+                  Icon(Icons.pets, size: 50, color: Color(0xFFFF914D).withOpacity(0.3)),
+                  SizedBox(height: 12),
                   Text(
                     "Thor - Bulldog Francês",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF2D3436)),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     "GENÉTICA DE ELITE • BRASÍLIA/DF",
-                    style: TextStyle(color: Colors.orange, fontSize: 9, fontWeight: FontWeight.w900),
+                    style: TextStyle(color: Colors.orange, fontSize: 10, fontWeight: FontWeight.w900),
                   ),
                 ],
               ),
             ),
           ),
 
-          // 3. O "QUADRADO" DE BOTÕES (PRECISÃO DO TEMPLATE)
+          // 3. GRADE COMPACTA (SISTEMA SOLAR - PRECISÃO TOTAL)
           Expanded(
             child: Center(
               child: Container(
-                width: 260, // Largura fixa para garantir o formato quadrado
-                height: 260, // Altura fixa para simetria total
+                width: 250, // Largura controlada para simetria absoluta
+                height: 250, // Altura controlada
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    // AMI NO CENTRO EXATO
+                    // AMI NO NÚCLEO
                     Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Container(
-                          width: 85,
-                          height: 85,
+                          width: 90,
+                          height: 90,
                           decoration: BoxDecoration(
                             color: Color(0xFFFF914D),
                             shape: BoxShape.circle,
                             boxShadow: [
-                              BoxShadow(color: Color(0xFFFF914D).withOpacity(0.4), blurRadius: 15, offset: Offset(0, 6))
+                              BoxShadow(
+                                color: Color(0xFFFF914D).withOpacity(0.4),
+                                blurRadius: 20,
+                                offset: Offset(0, 8),
+                              )
                             ],
                           ),
                           child: Center(
                             child: Text(
                               "AMI",
-                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 20),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 24,
+                              ),
                             ),
                           ),
                         ),
-                        SizedBox(height: 4),
+                        SizedBox(height: 5),
                         Text(
                           "IA ASSISTANT",
-                          style: TextStyle(fontSize: 8, fontWeight: FontWeight.w900, color: Color(0xFFFF914D)),
+                          style: TextStyle(fontSize: 9, fontWeight: FontWeight.w900, color: Color(0xFFFF914D)),
                         ),
                       ],
                     ),
-                    // BOTÕES NOS VÉRTICES (FORMATO QUADRADO)
-                    Positioned(top: 0, left: 0, child: _buildCircleBtn(Icons.store, "Market")),
-                    Positioned(top: 0, right: 0, child: _buildCircleBtn(Icons.favorite, "Match")),
-                    Positioned(bottom: 0, left: 0, child: _buildCircleBtn(Icons.assignment, "Ads")),
-                    Positioned(bottom: 0, right: 0, child: _buildCircleBtn(Icons.person, "Perfil")),
+                    // BOTÕES NAS QUATRO EXTREMIDADES (O QUADRADO)
+                    Positioned(top: 0, left: 10, child: _buildIconTile(Icons.store, "Market")),
+                    Positioned(top: 0, right: 10, child: _buildIconTile(Icons.favorite, "Match")),
+                    Positioned(bottom: 0, left: 10, child: _buildIconTile(Icons.assignment, "Ads")),
+                    Positioned(bottom: 0, right: 10, child: _buildIconTile(Icons.person, "Perfil")),
                   ],
                 ),
               ),
             ),
           ),
-          SizedBox(height: 20), // Margem de segurança inferior
+          SizedBox(height: 30), // Espaçamento estético final
         ],
       ),
     );
