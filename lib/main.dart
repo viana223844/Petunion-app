@@ -1,72 +1,120 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(const MaterialApp(
-  debugShowCheckedModeBanner: false,
-  home: PetunionFinal(),
-));
+void main() {
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: PetunionFinalHome(),
+  ));
+}
 
-class PetunionFinal extends StatelessWidget {
-  const PetunionFinal({super.key});
-
+class PetunionFinalHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F7F7),
+      backgroundColor: Color(0xFFF7F7F7),
       body: Stack(
         children: [
-          // FUNDO GRADIENTE SUPERIOR (REF: 1002880357)
+          // FUNDO LARANJA (FIDELIDADE 1002880357)
           Container(
             height: 380,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [Color(0xFFFF914D), Color(0xFFFF6B00)],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
+                colors: [Color(0xFFFF914D), Color(0xFFFF6B00)],
               ),
-              borderRadius: BorderRadius.vertical(bottom: Radius.circular(50)),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(50),
+                bottomRight: Radius.circular(50),
+              ),
             ),
           ),
+
           SafeArea(
             child: Column(
               children: [
-                _buildTopBar(),
-                // CARD BRANCO CENTRALIZADO
+                // TOP BAR (LOGO + NOTIFICAÇÃO)
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 22, vertical: 12),
+                  child: Row(
+                    children: [
+                      _headerCircle(Icons.pets),
+                      SizedBox(width: 12),
+                      Text("PETUNION", style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w900, letterSpacing: 2)),
+                      Spacer(),
+                      Icon(Icons.add, color: Colors.white, size: 28),
+                      SizedBox(width: 15),
+                      _badge("4"),
+                    ],
+                  ),
+                ),
+
+                // CARD BRANCO (THE PIXEL PERFECT CARD)
                 Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  width: double.infinity,
+                  margin: EdgeInsets.symmetric(horizontal: 18),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(45),
-                    boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 20)],
+                    boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.06), blurRadius: 25)],
                   ),
                   child: Column(
                     children: [
-                      const SizedBox(height: 30),
-                      const Text("Sociais & Accounts", 
-                        style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: Color(0xFFE65100))),
-                      const Padding(
-                        padding: EdgeInsets.all(15.0),
-                        child: Text("Selecione seus contatos para compartilhar.", 
-                          textAlign: TextAlign.center, style: TextStyle(color: Colors.grey, fontSize: 13)),
+                      SizedBox(height: 30),
+                      Text("Sociais & Accounts", style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: Color(0xFFE65100))),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                        child: Text("Selecione quais Sociais e Contatos serão compartilhados.", 
+                          textAlign: TextAlign.center, style: TextStyle(color: Colors.black45, fontSize: 13)),
                       ),
-                      // ÁREA DO AVATAR COM A CURVA CONVEXA (RESOLVENDO ERRO DO CLIPPER)
+                      
+                      // SCOOP CLIPPER (CORREÇÃO DO ERRO DO VÍDEO 1002880707)
                       Stack(
                         alignment: Alignment.center,
                         children: [
                           ClipPath(
                             clipper: ScoopClipper(),
-                            child: Container(height: 110, color: const Color(0xFFFF8C00)),
+                            child: Container(
+                              height: 120,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(colors: [Color(0xFFFF914D), Color(0xFFFF6B00)]),
+                              ),
+                            ),
                           ),
-                          _buildAvatar(),
+                          _avatar(),
                         ],
                       ),
-                      const Text("6 / 8", style: TextStyle(fontSize: 55, fontWeight: FontWeight.w100, color: Color(0xFFDCDCDC))),
-                      const SizedBox(height: 30),
+
+                      Text("6 / 8", style: TextStyle(fontSize: 55, fontWeight: FontWeight.w100, color: Color(0xFFDCDCDC))),
+                      SizedBox(height: 30),
                     ],
                   ),
                 ),
-                const Spacer(),
-                _buildAmiIA(),
-                _buildBottomNav(),
+
+                Spacer(),
+
+                // AMI IA E NAVBAR
+                _amiIA(),
+
+                Container(
+                  margin: EdgeInsets.fromLTRB(15, 0, 15, 25),
+                  padding: EdgeInsets.symmetric(vertical: 18, horizontal: 25),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(40),
+                    boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 15)],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _navIcon(Icons.storefront_outlined, "Market"),
+                      _navIcon(Icons.favorite_border, "Match"),
+                      SizedBox(width: 70), // Espaço para a AMI
+                      _navIcon(Icons.assignment_outlined, "Ads"),
+                      _navIcon(Icons.person_outline, "Perfil"),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -75,70 +123,50 @@ class PetunionFinal extends StatelessWidget {
     );
   }
 
-  // WIDGETS AUXILIARES COM SINTAXE LIMPA
-  Widget _buildTopBar() => const Padding(
-    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-    child: Row(
-      children: [
-        CircleAvatar(backgroundColor: Colors.white, radius: 15, child: Icon(Icons.pets, size: 18, color: Colors.orange)),
-        SizedBox(width: 10),
-        Text("PETUNION", style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w900, letterSpacing: 2)),
-        Spacer(),
-        Icon(Icons.add, color: Colors.white),
-      ],
-    ),
-  );
+  // WIDGETS DE SUPORTE (SEM CONST PARA EVITAR O ERRO 1002880720)
+  Widget _headerCircle(IconData i) => Container(padding: EdgeInsets.all(7), decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle), child: Icon(i, color: Color(0xFFFF6B00), size: 18));
+  
+  Widget _badge(String txt) => Stack(children: [Icon(Icons.chat_bubble_outline, color: Colors.white, size: 28), Positioned(right: 0, top: 0, child: CircleAvatar(radius: 8, backgroundColor: Color(0xFFD84315), child: Text(txt, style: TextStyle(fontSize: 8, color: Colors.white, fontWeight: FontWeight.bold))))]);
 
-  Widget _buildAvatar() => Container(
+  Widget _avatar() => Container(
     width: 90, height: 90,
     decoration: BoxDecoration(
       shape: BoxShape.circle,
       border: Border.all(color: Colors.white, width: 4),
-      image: const DecorationImage(image: NetworkImage('https://i.pravatar.cc/150?u=a'), fit: BoxFit.cover),
+      image: DecorationImage(image: NetworkImage('https://i.pravatar.cc/150?u=pet'), fit: BoxFit.cover),
     ),
   );
 
-  Widget _buildAmiIA() => Column(
+  Widget _amiIA() => Column(
     children: [
       Container(
-        width: 100, height: 100,
-        decoration: const BoxDecoration(shape: BoxShape.circle, gradient: RadialGradient(colors: [Color(0xFFFFB347), Color(0xFFFF8C00)])),
-        child: const Center(child: Text("AMI", style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold))),
+        width: 105, height: 105,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          gradient: RadialGradient(colors: [Color(0xFFFFB347), Color(0xFFFF8C00)]),
+          boxShadow: [BoxShadow(color: Color(0xFFFF6B00).withOpacity(0.4), blurRadius: 20)],
+        ),
+        child: Center(child: Text("AMI", style: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.w900))),
       ),
-      const Text("IA ASSISTANT", style: TextStyle(color: Colors.orange, fontSize: 10, fontWeight: FontWeight.bold)),
-      const SizedBox(height: 10),
+      SizedBox(height: 5),
+      Text("IA ASSISTANT", style: TextStyle(color: Color(0xFFFF8C00), fontSize: 10, fontWeight: FontWeight.w900)),
     ],
   );
 
-  Widget _buildBottomNav() => Container(
-    margin: const EdgeInsets.fromLTRB(15, 0, 15, 20),
-    padding: const EdgeInsets.symmetric(vertical: 15),
-    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(40)),
-    child: const Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Icon(Icons.storefront, color: Colors.black12),
-        Icon(Icons.favorite_border, color: Colors.black12),
-        SizedBox(width: 40),
-        Icon(Icons.assignment, color: Colors.black12),
-        Icon(Icons.person_outline, color: Colors.black12),
-      ],
-    ),
-  );
+  Widget _navIcon(IconData i, String l) => Column(mainAxisSize: MainAxisSize.min, children: [Icon(i, color: Colors.grey[300], size: 28), Text(l, style: TextStyle(color: Colors.grey[400], fontSize: 10))]);
 }
 
-// IMPLEMENTAÇÃO CORRETA E COMPLETA DO CLIPPER (RESOLVE O ERRO DO VÍDEO)
+// CLIPPER COM IMPLEMENTAÇÃO COMPLETA (CORREÇÃO 1002880707)
 class ScoopClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     Path path = Path();
-    path.lineTo(0, size.height * 0.5);
-    path.quadraticBezierTo(size.width / 2, size.height * 1.2, size.width, size.height * 0.5);
+    path.lineTo(0, size.height * 0.7);
+    path.quadraticBezierTo(size.width * 0.5, size.height * 1.3, size.width, size.height * 0.7);
     path.lineTo(size.width, 0);
     path.close();
     return path;
   }
-
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
