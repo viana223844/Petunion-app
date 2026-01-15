@@ -3,23 +3,14 @@ import 'package:flutter/material.dart';
 void main() => runApp(MaterialApp(debugShowCheckedModeBanner: false, home: PetunionHome()));
 
 class PetunionHome extends StatelessWidget {
-  // Widget de Satélites: Pequenos, elegantes e discretos
-  Widget _buildSatellite(IconData icon, String label) {
+  // Botoes da TabBar inferior: pequenos, cinzas e minimalistas
+  Widget _buildTabItem(IconData icon, String label) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          width: 40, 
-          height: 40,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            shape: BoxShape.circle,
-            boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 5, offset: Offset(0, 2))],
-          ),
-          child: Icon(icon, color: Color(0xFFFF914D), size: 18),
-        ),
-        SizedBox(height: 3),
-        Text(label, style: TextStyle(fontSize: 8, fontWeight: FontWeight.w700, color: Colors.black45)),
+        Icon(icon, color: Colors.grey[600], size: 24),
+        SizedBox(height: 4),
+        Text(label, style: TextStyle(fontSize: 10, color: Colors.grey[600], fontWeight: FontWeight.w500)),
       ],
     );
   }
@@ -27,91 +18,142 @@ class PetunionHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final h = size.height;
-    final w = size.width;
-
+    
     return Scaffold(
-      backgroundColor: Color(0xFFFF914D),
-      body: Column(
+      backgroundColor: Colors.white,
+      body: Stack(
         children: [
-          // 1. BRANDING TOPO (ALTO IMPACTO)
-          SafeArea(
-            child: Padding(
-              padding: EdgeInsets.only(top: 15, bottom: 10),
-              child: Text(
-                "PETUNION",
-                style: TextStyle(color: Colors.white, fontSize: 36, fontWeight: FontWeight.w900, letterSpacing: 12),
+          // 1. FUNDO LARANJA SUPERIOR (CURVADO)
+          Container(
+            height: size.height * 0.45,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Color(0xFFFF8A00), Color(0xFFFF6B00)],
+              ),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(60),
+                bottomRight: Radius.circular(60),
               ),
             ),
           ),
 
-          // 2. O OUTDOOR (O REI DA TELA - 55% DE ALTURA)
-          Container(
-            width: double.infinity,
-            height: h * 0.55,
-            margin: EdgeInsets.symmetric(horizontal: 15),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(50),
-              boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 40, offset: Offset(0, 20))],
-            ),
+          // 2. CONTEÚDO PRINCIPAL
+          SafeArea(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Thor", style: TextStyle(fontSize: 34, fontWeight: FontWeight.w900, color: Color(0xFFFF914D))),
-                Text("Bulldog Francês", style: TextStyle(fontSize: 18, color: Colors.black45, fontWeight: FontWeight.w600)),
-                
-                // Área da Imagem Centralizada
-                Container(
-                  height: h * 0.25,
-                  margin: EdgeInsets.symmetric(vertical: 20),
-                  child: Center(
-                    child: Icon(Icons.pets, size: 120, color: Color(0xFFFF914D).withOpacity(0.1)),
+                // HEADER (LOGO + ICONES)
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(8),
+                        decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+                        child: Icon(Icons.pets, color: Color(0xFFFF6B00), size: 20),
+                      ),
+                      SizedBox(width: 12),
+                      Text("PETUNION", style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w900, letterSpacing: 2)),
+                      Spacer(),
+                      Icon(Icons.add, color: Colors.white, size: 28),
+                      SizedBox(width: 15),
+                      Icon(Icons.chat_bubble_outline, color: Colors.white, size: 26),
+                    ],
                   ),
                 ),
 
-                Text("GENÉTICA DE ELITE", style: TextStyle(color: Colors.orange, fontSize: 11, fontWeight: FontWeight.w900, letterSpacing: 2)),
-                Text("BRASÍLIA / DF", style: TextStyle(color: Colors.black26, fontSize: 12, fontWeight: FontWeight.bold)),
-              ],
-            ),
-          ),
-
-          // 3. MENU INFERIOR (COMPACTO E ORBITAL - AMI PROTAGONISTA)
-          Expanded(
-            child: Center(
-              child: Container(
-                width: 220, // REDUZIDO: Para os círculos "abraçarem" a AMI
-                height: 220,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    // AMI: O SOL DO SISTEMA
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          width: 90, // DESTAQUE: AMI maior
-                          height: 90,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(colors: [Color(0xFFFF914D), Color(0xFFF37021)]),
-                            shape: BoxShape.circle,
-                            boxShadow: [BoxShadow(color: Colors.orange.withOpacity(0.4), blurRadius: 20, offset: Offset(0, 10))],
-                          ),
-                          child: Center(child: Text("AMI", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 24))),
+                // 3. O OUTDOOR (CARD BRANCO FLUTUANTE)
+                Container(
+                  width: size.width * 0.9,
+                  height: size.height * 0.42,
+                  margin: EdgeInsets.only(top: 20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(40),
+                    boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 20, offset: Offset(0, 10))],
+                  ),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(25),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Thor - Bulldog Francês", style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: Color(0xFFE65100))),
+                            SizedBox(height: 5),
+                            Text("Selecione quais detalhes de Thor serão compartilhados no Match.", 
+                              style: TextStyle(color: Colors.black45, fontSize: 13, fontWeight: FontWeight.w500)),
+                          ],
                         ),
-                        SizedBox(height: 5),
-                        Text("IA ASSISTANT", style: TextStyle(fontSize: 9, fontWeight: FontWeight.w900, color: Colors.white)),
-                      ],
+                      ),
+                      // AVATAR CENTRAL COM INDICADOR "6/8"
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(image: NetworkImage('https://placedog.net/200/200'), fit: BoxFit.cover),
+                              border: Border.all(color: Colors.white, width: 4),
+                              boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 10)],
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 15),
+                      Text("6 / 8", style: TextStyle(fontSize: 40, fontWeight: FontWeight.w300, color: Colors.grey[400])),
+                      Container(width: 60, height: 2, color: Colors.grey[200]),
+                    ],
+                  ),
+                ),
+
+                Spacer(),
+
+                // 4. AMI (A GRANDE IA CENTRAL)
+                Column(
+                  children: [
+                    Container(
+                      width: 110,
+                      height: 110,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(colors: [Color(0xFFFF8A00), Color(0xFFF37021)]),
+                        shape: BoxShape.circle,
+                        boxShadow: [BoxShadow(color: Colors.orange.withOpacity(0.4), blurRadius: 25, offset: Offset(0, 10))],
+                      ),
+                      child: Center(
+                        child: Text("AMI", style: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.w900)),
+                      ),
                     ),
-                    
-                    // ÓRBITA FECHADA (POSIÇÕES MATEMÁTICAS PRECISAS)
-                    Positioned(top: 15, left: 5, child: _buildSatellite(Icons.store, "Market")),
-                    Positioned(top: 15, right: 5, child: _buildSatellite(Icons.favorite, "Match")),
-                    Positioned(bottom: 15, left: 10, child: _buildSatellite(Icons.assignment, "Ads")),
-                    Positioned(bottom: 15, right: 10, child: _buildSatellite(Icons.person, "Perfil")),
+                    SizedBox(height: 8),
+                    Text("IA ASSISTANT", style: TextStyle(fontSize: 10, fontWeight: FontWeight.w900, color: Color(0xFFFF6B00), letterSpacing: 1)),
                   ],
                 ),
-              ),
+
+                SizedBox(height: 30),
+
+                // 5. BARRA DE NAVEGAÇÃO FINAL (STYLE 1002880357)
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+                  decoration: BoxDecoration(
+                    color: Color(0xFFFDFDFD),
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(35), topRight: Radius.circular(35)),
+                    boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10, spreadRadius: 1)],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _buildTabItem(Icons.storefront_outlined, "Market"),
+                      _buildTabItem(Icons.favorite_border, "Match"),
+                      SizedBox(width: 40), // Espaço para a AMI respirar
+                      _buildTabItem(Icons.assignment_outlined, "Ads"),
+                      _buildTabItem(Icons.person_outline, "Perfil"),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
         ],
