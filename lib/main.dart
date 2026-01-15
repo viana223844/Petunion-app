@@ -3,118 +3,129 @@ import 'package:flutter/material.dart';
 void main() => runApp(MaterialApp(debugShowCheckedModeBanner: false, home: PetunionHome()));
 
 class PetunionHome extends StatelessWidget {
-  // Unidade de Design Atômica para os botões secundários
+  // Widget de botão secundário (Estilo Minimalista da imagem)
   Widget _buildOrbitalBtn(IconData icon, String label) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          width: 60,
-          height: 60,
+          width: 50,
+          height: 50,
           decoration: BoxDecoration(
             color: Colors.white,
             shape: BoxShape.circle,
-            boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.08), blurRadius: 12, offset: Offset(0, 4))],
+            boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 8, offset: Offset(0, 3))],
           ),
-          child: Icon(icon, color: Color(0xFFFF914D), size: 26),
+          child: Icon(icon, color: Color(0xFFFF914D), size: 22),
         ),
-        SizedBox(height: 6),
-        Text(label, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.black54)),
+        SizedBox(height: 4),
+        Text(label, style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.black45)),
       ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final h = MediaQuery.of(context).size.height;
+    final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: Color(0xFFF8FAFC),
+      backgroundColor: Color(0xFFFF914D), // Fundo laranja total como na imagem
       body: Column(
         children: [
-          // 1. OUTDOOR SOBERANO & BRANDING ELEVADO
-          Container(
-            width: double.infinity,
-            height: h * 0.44, // Proporção áurea para o outdoor
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Color(0xFFFF914D), Color(0xFFF37021)],
-                begin: Alignment.topCenter, end: Alignment.bottomCenter,
-              ),
-              borderRadius: BorderRadius.vertical(bottom: Radius.circular(60)),
-            ),
-            child: SafeArea(
-              child: Padding(
-                padding: EdgeInsets.only(top: 20), // Nome no topo absoluto
-                child: Text(
-                  "PETUNION",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.white, fontSize: 36, fontWeight: FontWeight.w900, letterSpacing: 12),
+          // 1. NOME PETUNION NO TOPO (MÁXIMO IMPACTO)
+          SafeArea(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 20),
+              child: Text(
+                "PETUNION",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 42,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 10,
                 ),
               ),
             ),
           ),
 
-          // 2. CARD IDENTITÁRIO (RECUO TÉCNICO)
-          Transform.translate(
-            offset: Offset(0, -h * 0.10),
+          // 2. O GRANDE OUTDOOR BRANCO (DOMINANTE)
+          Expanded(
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 40),
-              padding: EdgeInsets.all(25),
+              width: double.infinity,
+              margin: EdgeInsets.fromLTRB(25, 0, 25, 30),
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(35),
-                boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 30, offset: Offset(0, 15))],
+                color: Color(0xFFF8F9FA),
+                borderRadius: BorderRadius.circular(45),
+                boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 30, offset: Offset(0, 15))],
               ),
               child: Column(
                 children: [
-                  Icon(Icons.pets, size: 55, color: Color(0xFFFF914D).withOpacity(0.2)),
-                  SizedBox(height: 15),
-                  Text("Thor - Bulldog Francês", style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold)),
-                  Text("GENÉTICA DE ELITE • BRASÍLIA/DF", style: TextStyle(color: Colors.orange, fontSize: 10, fontWeight: FontWeight.w900)),
+                  // ÁREA DA IMAGEM DO PET (EXPANDIDA)
+                  Expanded(
+                    flex: 3,
+                    child: Container(
+                      margin: EdgeInsets.all(20),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(35),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.pets, size: 80, color: Color(0xFFFF914D).withOpacity(0.2)),
+                          SizedBox(height: 20),
+                          Text("Thor - Bulldog Francês", 
+                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF2D3436))),
+                          Text("GENÉTICA DE ELITE • BRASÍLIA/DF", 
+                            style: TextStyle(color: Colors.orange, fontSize: 11, fontWeight: FontWeight.w900)),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  // 3. GRADE QUADRADA COM AMI (INTEGRADA AO CARD)
+                  Expanded(
+                    flex: 2,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 30),
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          // LINHA DE CIMA
+                          Positioned(top: 0, left: 0, child: _buildOrbitalBtn(Icons.store, "Market")),
+                          Positioned(top: 0, right: 0, child: _buildOrbitalBtn(Icons.favorite, "Match")),
+                          
+                          // CENTRO: AMI
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                width: 90,
+                                height: 90,
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(colors: [Color(0xFFFF914D), Color(0xFFF37021)]),
+                                  shape: BoxShape.circle,
+                                  boxShadow: [BoxShadow(color: Colors.orange.withOpacity(0.4), blurRadius: 15, offset: Offset(0, 8))],
+                                ),
+                                child: Center(child: Text("AMI", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 22))),
+                              ),
+                              SizedBox(height: 4),
+                              Text("IA ASSISTANT", style: TextStyle(fontSize: 8, fontWeight: FontWeight.w900, color: Colors.orange)),
+                            ],
+                          ),
+
+                          // LINHA DE BAIXO
+                          Positioned(bottom: 20, left: 0, child: _buildOrbitalBtn(Icons.assignment, "Ads")),
+                          Positioned(bottom: 20, right: 0, child: _buildOrbitalBtn(Icons.person, "Perfil")),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
           ),
-
-          // 3. GRADE QUADRADA COMPACTA (PRECISÃO DO TEMPLATE)
-          Expanded(
-            child: Center(
-              child: Container(
-                width: 240, // Largura fixa para manter os botões próximos (Template Look)
-                height: 240, // Altura fixa para simetria quadrada
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    // NÚCLEO CENTRAL: AMI
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          width: 100,
-                          height: 100,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFFF914D),
-                            shape: BoxShape.circle,
-                            boxShadow: [BoxShadow(color: Color(0xFFFF914D).withOpacity(0.4), blurRadius: 25, offset: Offset(0, 10))],
-                          ),
-                          child: Center(child: Text("AMI", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 26))),
-                        ),
-                        SizedBox(height: 4),
-                        Text("IA ASSISTANT", style: TextStyle(fontSize: 9, fontWeight: FontWeight.w900, color: Color(0xFFFF914D))),
-                      ],
-                    ),
-                    // VÉRTICES DO QUADRADO (POSICIONAMENTO MATEMÁTICO)
-                    Positioned(top: 0, left: 0, child: _buildOrbitalBtn(Icons.store, "Market")),
-                    Positioned(top: 0, right: 0, child: _buildOrbitalBtn(Icons.favorite, "Match")),
-                    Positioned(bottom: 0, left: 0, child: _buildOrbitalBtn(Icons.assignment, "Ads")),
-                    Positioned(bottom: 0, right: 0, child: _buildOrbitalBtn(Icons.person, "Perfil")),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 40),
         ],
       ),
     );
