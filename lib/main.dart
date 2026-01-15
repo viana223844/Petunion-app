@@ -3,124 +3,114 @@ import 'package:flutter/material.dart';
 void main() => runApp(MaterialApp(debugShowCheckedModeBanner: false, home: PetunionHome()));
 
 class PetunionHome extends StatelessWidget {
-  // Widget de botão Neumórfico ajustado para escala menor
-  Widget _buildNeumorphicBtn(IconData icon, String label, double btnSize) {
+  // Widget de Satélites: Pequenos, elegantes e discretos
+  Widget _buildSatellite(IconData icon, String label) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          width: btnSize,
-          height: btnSize,
+          width: 40, 
+          height: 40,
           decoration: BoxDecoration(
             color: Colors.white,
             shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(color: Colors.black12, blurRadius: 8, offset: Offset(0, 4)),
-            ],
+            boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 5, offset: Offset(0, 2))],
           ),
-          child: Icon(icon, color: Color(0xFFFF914D), size: btnSize * 0.5),
+          child: Icon(icon, color: Color(0xFFFF914D), size: 18),
         ),
-        SizedBox(height: 4),
-        Text(label, style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.black54)),
+        SizedBox(height: 3),
+        Text(label, style: TextStyle(fontSize: 8, fontWeight: FontWeight.w700, color: Colors.black45)),
       ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    // RESOLUÇÃO DO ERRO: Definindo 'size' corretamente aqui
     final size = MediaQuery.of(context).size;
-    final double h = size.height;
-    final double w = size.width;
+    final h = size.height;
+    final w = size.width;
 
     return Scaffold(
       backgroundColor: Color(0xFFFF914D),
-      body: Stack(
+      body: Column(
         children: [
-          // 1. BRANDING NO TOPO
+          // 1. BRANDING TOPO (ALTO IMPACTO)
           SafeArea(
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: Padding(
-                padding: EdgeInsets.only(top: 10),
-                child: Text("PETUNION", 
-                  style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.w900, letterSpacing: 8)),
+            child: Padding(
+              padding: EdgeInsets.only(top: 15, bottom: 10),
+              child: Text(
+                "PETUNION",
+                style: TextStyle(color: Colors.white, fontSize: 36, fontWeight: FontWeight.w900, letterSpacing: 12),
               ),
             ),
           ),
 
-          // 2. O OUTDOOR (CENTRO DAS ATENÇÕES - ESTILO TEMPLATE 1002879956)
-          Positioned(
-            top: h * 0.12,
-            left: 20,
-            right: 20,
-            child: Container(
-              height: h * 0.48, // Maior destaque na tela
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.95),
-                borderRadius: BorderRadius.circular(45),
-                boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 30, offset: Offset(0, 15))],
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Thor", style: TextStyle(fontSize: 28, fontWeight: FontWeight.w900, color: Color(0xFFFF914D))),
-                  Text("Bulldog Francês", style: TextStyle(fontSize: 16, color: Colors.black54, fontWeight: FontWeight.w600)),
-                  SizedBox(height: 20),
-                  // Avatar do Pet
-                  Container(
-                    width: 120,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xFFF8F9FA),
-                      border: Border.all(color: Color(0xFFFF914D), width: 2),
-                    ),
-                    child: Icon(Icons.pets, size: 60, color: Color(0xFFFF914D).withOpacity(0.3)),
+          // 2. O OUTDOOR (O REI DA TELA - 55% DE ALTURA)
+          Container(
+            width: double.infinity,
+            height: h * 0.55,
+            margin: EdgeInsets.symmetric(horizontal: 15),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(50),
+              boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 40, offset: Offset(0, 20))],
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Thor", style: TextStyle(fontSize: 34, fontWeight: FontWeight.w900, color: Color(0xFFFF914D))),
+                Text("Bulldog Francês", style: TextStyle(fontSize: 18, color: Colors.black45, fontWeight: FontWeight.w600)),
+                
+                // Área da Imagem Centralizada
+                Container(
+                  height: h * 0.25,
+                  margin: EdgeInsets.symmetric(vertical: 20),
+                  child: Center(
+                    child: Icon(Icons.pets, size: 120, color: Color(0xFFFF914D).withOpacity(0.1)),
                   ),
-                  SizedBox(height: 20),
-                  Text("GENÉTICA DE ELITE", style: TextStyle(letterSpacing: 2, fontSize: 10, fontWeight: FontWeight.bold, color: Colors.orange)),
-                  Text("BRASÍLIA / DF", style: TextStyle(fontSize: 12, color: Colors.black38)),
-                ],
-              ),
+                ),
+
+                Text("GENÉTICA DE ELITE", style: TextStyle(color: Colors.orange, fontSize: 11, fontWeight: FontWeight.w900, letterSpacing: 2)),
+                Text("BRASÍLIA / DF", style: TextStyle(color: Colors.black26, fontSize: 12, fontWeight: FontWeight.bold)),
+              ],
             ),
           ),
 
-          // 3. MENU INFERIOR (COMPACTO E PROPORCIONAL)
-          Positioned(
-            bottom: h * 0.04,
-            left: 0,
-            right: 0,
-            child: Container(
-              height: 220,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  // AMI (DESTAQUE CENTRAL)
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        width: 85, // Maior que os outros, mas sem exageros
-                        height: 85,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(colors: [Color(0xFFFF914D), Color(0xFFF37021)]),
-                          shape: BoxShape.circle,
-                          boxShadow: [BoxShadow(color: Colors.orange.withOpacity(0.4), blurRadius: 15, offset: Offset(0, 8))],
+          // 3. MENU INFERIOR (COMPACTO E ORBITAL - AMI PROTAGONISTA)
+          Expanded(
+            child: Center(
+              child: Container(
+                width: 220, // REDUZIDO: Para os círculos "abraçarem" a AMI
+                height: 220,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    // AMI: O SOL DO SISTEMA
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: 90, // DESTAQUE: AMI maior
+                          height: 90,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(colors: [Color(0xFFFF914D), Color(0xFFF37021)]),
+                            shape: BoxShape.circle,
+                            boxShadow: [BoxShadow(color: Colors.orange.withOpacity(0.4), blurRadius: 20, offset: Offset(0, 10))],
+                          ),
+                          child: Center(child: Text("AMI", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 24))),
                         ),
-                        child: Center(child: Text("AMI", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 22))),
-                      ),
-                      SizedBox(height: 4),
-                      Text("IA ASSISTANT", style: TextStyle(fontSize: 8, fontWeight: FontWeight.w900, color: Colors.white)),
-                    ],
-                  ),
-                  
-                  // ÓRBITA COMPACTA (CÍRCULOS MENORES)
-                  Positioned(top: 0, left: w * 0.18, child: _buildNeumorphicBtn(Icons.store, "Market", 48)),
-                  Positioned(top: 0, right: w * 0.18, child: _buildNeumorphicBtn(Icons.favorite, "Match", 48)),
-                  Positioned(bottom: 15, left: w * 0.20, child: _buildNeumorphicBtn(Icons.assignment, "Ads", 48)),
-                  Positioned(bottom: 15, right: w * 0.20, child: _buildNeumorphicBtn(Icons.person, "Perfil", 48)),
-                ],
+                        SizedBox(height: 5),
+                        Text("IA ASSISTANT", style: TextStyle(fontSize: 9, fontWeight: FontWeight.w900, color: Colors.white)),
+                      ],
+                    ),
+                    
+                    // ÓRBITA FECHADA (POSIÇÕES MATEMÁTICAS PRECISAS)
+                    Positioned(top: 15, left: 5, child: _buildSatellite(Icons.store, "Market")),
+                    Positioned(top: 15, right: 5, child: _buildSatellite(Icons.favorite, "Match")),
+                    Positioned(bottom: 15, left: 10, child: _buildSatellite(Icons.assignment, "Ads")),
+                    Positioned(bottom: 15, right: 10, child: _buildSatellite(Icons.person, "Perfil")),
+                  ],
+                ),
               ),
             ),
           ),
