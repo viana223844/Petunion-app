@@ -1,149 +1,214 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(MaterialApp(debugShowCheckedModeBanner: false, home: PetunionHome()));
+void main() {
+  runApp(const MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: PetunionHome(),
+  ));
+}
 
 class PetunionHome extends StatelessWidget {
+  const PetunionHome({super.key});
+
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    
     return Scaffold(
-      backgroundColor: Color(0xFFF5F5F5), // Fundo levemente cinza para destacar o branco
+      backgroundColor: const Color(0xFFFDFDFD),
       body: Stack(
+        alignment: Alignment.topCenter,
         children: [
-          // 1. HEADER LARANJA COM DESIGN CURVADO (REFERÊNCIA 1002880357)
-          ClipPath(
-            clipper: HeaderClipper(),
-            child: Container(
-              height: size.height * 0.42,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Color(0xFFFF8A00), Color(0xFFFF5C00)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
+          // 1. FUNDO GRADIENTE SUPERIOR COM CURVA (HEADER)
+          Container(
+            height: MediaQuery.of(context).size.height * 0.45,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Color(0xFFFF8A00), Color(0xFFFF5C00)],
+              ),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(50),
+                bottomRight: Radius.circular(50),
               ),
             ),
           ),
 
-          // 2. CAMADA DE CONTEÚDO
+          // 2. CONTEÚDO PRINCIPAL EM COLUNA
           SafeArea(
             child: Column(
               children: [
-                // TOP BAR (PETUNION + ÍCONES)
+                // HEADER: LOGO + ADD + CHAT
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: Row(
                     children: [
-                      Container(
-                        padding: EdgeInsets.all(6),
-                        decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-                        child: Icon(Icons.pets, color: Color(0xFFFF5C00), size: 18),
+                      const CircleAvatar(
+                        radius: 18,
+                        backgroundColor: Colors.white,
+                        child: Icon(Icons.pets, color: Color(0xFFFF5C00), size: 20),
                       ),
-                      SizedBox(width: 10),
-                      Text("PETUNION", style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w900, letterSpacing: 1.5)),
-                      Spacer(),
-                      Icon(Icons.add, color: Colors.white, size: 28),
-                      SizedBox(width: 15),
+                      const SizedBox(width: 12),
+                      const Text(
+                        "PETUNION",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 1.5,
+                        ),
+                      ),
+                      const Spacer(),
+                      const Icon(Icons.add, color: Colors.white, size: 30),
+                      const SizedBox(width: 15),
                       Stack(
                         children: [
-                          Icon(Icons.chat_bubble_outline, color: Colors.white, size: 26),
-                          Positioned(right: 0, top: 0, child: CircleAvatar(radius: 7, backgroundColor: Color(0xFFE65100), child: Text("4", style: TextStyle(fontSize: 8, color: Colors.white)))),
+                          const Icon(Icons.chat_bubble_outline, color: Colors.white, size: 28),
+                          Positioned(
+                            right: 0,
+                            top: 0,
+                            child: Container(
+                              padding: const EdgeInsets.all(2),
+                              decoration: const BoxDecoration(color: Color(0xFFD84315), shape: BoxShape.circle),
+                              constraints: const BoxConstraints(minWidth: 14, minHeight: 14),
+                              child: const Text('4', style: TextStyle(color: Colors.white, fontSize: 8), textAlign: TextAlign.center),
+                            ),
+                          ),
                         ],
                       ),
                     ],
                   ),
                 ),
 
-                // 3. CARD BRANCO (DESIGN FIDEDIGNO)
+                // 3. CARD BRANCO CENTRAL (SOCIALS & ACCOUNTS)
                 Container(
-                  width: size.width * 0.92,
-                  margin: EdgeInsets.only(top: 10),
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  margin: const EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Colors.white.withOpacity(0.95),
                     borderRadius: BorderRadius.circular(40),
-                    boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.08), blurRadius: 30, offset: Offset(0, 15))],
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 20,
+                        offset: const Offset(0, 10),
+                      )
+                    ],
                   ),
                   child: Column(
                     children: [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(30, 30, 30, 10),
-                        child: Column(
-                          children: [
-                            Text("Sociais & Accounts", style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800, color: Color(0xFFFF7A00))),
-                            SizedBox(height: 10),
-                            Text("Selecione quais Sociais e Contatos serão compartilhados com seu novo amigo.", 
-                              textAlign: TextAlign.center, style: TextStyle(color: Colors.black45, fontSize: 13, height: 1.4)),
-                          ],
+                      const Text(
+                        "Sociais & Accounts",
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFFFF7A00),
                         ),
                       ),
-                      
-                      // AVATAR CENTRALIZADO NA CURVA
+                      const SizedBox(height: 8),
+                      const Text(
+                        "Selecione quais Sociais e Contatos serão compartilhados com seu novo amigo.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.black45, fontSize: 13),
+                      ),
+                      const SizedBox(height: 20),
+                      // FOTO DO USUÁRIO
                       Container(
-                        width: 85, height: 85,
-                        margin: EdgeInsets.symmetric(vertical: 10),
+                        width: 90,
+                        height: 90,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border: Border.all(color: Colors.white, width: 4),
-                          image: DecorationImage(image: NetworkImage('https://i.pravatar.cc/150?u=thor'), fit: BoxFit.cover),
-                          boxShadow: [BoxShadow(color: Colors.orange.withOpacity(0.2), blurRadius: 15)],
+                          image: const DecorationImage(
+                            image: NetworkImage('https://i.pravatar.cc/150?u=a'),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
-
-                      // CONTADOR 6/8 ELEGANTE
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 25),
-                        child: Column(
-                          children: [
-                            Text("6 / 8", style: TextStyle(fontSize: 48, fontWeight: FontWeight.w200, color: Color(0xFFD1D1D1))),
-                            Container(width: 40, height: 2, color: Color(0xFFF0F0F0)),
-                          ],
+                      const SizedBox(height: 15),
+                      // O "6 / 8" EM FONTE LEVE
+                      const Text(
+                        "6 / 8",
+                        style: TextStyle(
+                          fontSize: 50,
+                          fontWeight: FontWeight.w100,
+                          color: Color(0xFFE0E0E0),
                         ),
                       ),
+                      Container(width: 50, height: 1.5, color: const Color(0xFFEEEEEE)),
                     ],
                   ),
                 ),
 
-                Spacer(),
+                const Spacer(),
 
-                // 4. AMI (FLUTUANDO NO DESIGN)
-                Column(
+                // 4. AMI E BARRA DE NAVEGAÇÃO INTEGRADA
+                Stack(
+                  alignment: Alignment.bottomCenter,
                   children: [
+                    // BARRA DE NAVEGAÇÃO "PILL"
                     Container(
-                      width: 100, height: 100,
+                      height: 80,
+                      margin: const EdgeInsets.fromLTRB(15, 0, 15, 20),
                       decoration: BoxDecoration(
-                        gradient: RadialGradient(colors: [Color(0xFFFF914D), Color(0xFFF37021)]),
-                        shape: BoxShape.circle,
-                        boxShadow: [BoxShadow(color: Colors.orange.withOpacity(0.4), blurRadius: 25, offset: Offset(0, 10))],
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(40),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.05),
+                            blurRadius: 15,
+                            offset: const Offset(0, -5),
+                          )
+                        ],
                       ),
-                      child: Center(child: Text("AMI", style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.w900))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          _buildNavItem(Icons.storefront_outlined, "Market"),
+                          _buildNavItem(Icons.favorite_border, "Match"),
+                          const SizedBox(width: 70), // Espaço para a AMI
+                          _buildNavItem(Icons.assignment_outlined, "Ads"),
+                          _buildNavItem(Icons.person_outline, "Perfil"),
+                        ],
+                      ),
                     ),
-                    SizedBox(height: 5),
-                    Text("IA ASSISTANT", style: TextStyle(fontSize: 9, fontWeight: FontWeight.w900, color: Color(0xFFFF6B00))),
+                    // BOTÃO AMI FLUTUANTE CENTRAL
+                    Positioned(
+                      bottom: 40,
+                      child: Column(
+                        children: [
+                          Container(
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: const RadialGradient(
+                                colors: [Color(0xFFFFB347), Color(0xFFFF8C00)],
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: const Color(0xFFFF8C00).withOpacity(0.4),
+                                  blurRadius: 20,
+                                  offset: const Offset(0, 8),
+                                )
+                              ],
+                            ),
+                            child: const Center(
+                              child: Text(
+                                "AMI",
+                                style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.w900),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          const Text(
+                            "IA ASSISTANT",
+                            style: TextStyle(color: Color(0xFFFF8C00), fontSize: 10, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
-                ),
-
-                SizedBox(height: 15),
-
-                // 5. BARRA DE NAVEGAÇÃO (ESTILO PILL / REFERENCE 1002880357)
-                Container(
-                  margin: EdgeInsets.fromLTRB(15, 0, 15, 20),
-                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(35),
-                    boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 20)],
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _navBtn(Icons.storefront_outlined, "Market"),
-                      _navBtn(Icons.favorite_border, "Match"),
-                      SizedBox(width: 60), // Espaço para a AMI
-                      _navBtn(Icons.assignment_outlined, "Ads"),
-                      _navBtn(Icons.person_outline, "Perfil"),
-                    ],
-                  ),
                 ),
               ],
             ),
@@ -153,33 +218,13 @@ class PetunionHome extends StatelessWidget {
     );
   }
 
-  Widget _navBtn(IconData icon, String label) {
+  Widget _buildNavItem(IconData icon, String label) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, color: Colors.grey[400], size: 26),
-        SizedBox(height: 2),
+        Icon(icon, color: Colors.grey[400], size: 28),
         Text(label, style: TextStyle(color: Colors.grey[400], fontSize: 10, fontWeight: FontWeight.w600)),
       ],
     );
   }
-}
-
-// CLIPPER PARA CRIAR A CURVA IDENTICA AO PRINT
-class HeaderClipper extends CustomClipper<Path> {
-  @override
-  Path getMaterial(Size size) => getPath(size);
-
-  @override
-  Path getPath(Size size) {
-    Path path = Path();
-    path.lineTo(0, size.height - 80);
-    path.quadraticBezierTo(size.width / 2, size.height, size.width, size.height - 80);
-    path.lineTo(size.width, 0);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
